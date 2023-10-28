@@ -1,0 +1,95 @@
+﻿@model OnlineStore.Models.OrderViewModel
+@{
+    ViewBag.Title = "Thanh toán";
+}
+<style>
+    .error {
+        color: red;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<div class="container product_section_container">
+    <div class="row">
+        <div class="col product_section clearfix">
+
+            <!-- Breadcrumbs -->
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li class="active"><a href=""><i class="fa fa-angle-right" aria-hidden="true"></i>Thanh toán</a></li>
+                </ul>
+            </div>
+
+            <!-- Sidebar -->
+            <!-- Main Content -->
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Thanh toán</h1>
+                    <p>Bạn hãy kiểm tra lại thông tin đơn hàng cho chính xác!</p>
+                </div>
+            </div>
+            <hr />
+            @if (ViewBag.CheckCart != null)
+            {
+                <div class="row">
+                    <div id="show_success"></div>
+                    <div class="col-md-7">
+                        @Html.Action("Partial_CheckOut", "ShoppingCart")
+                    </div>
+                    <div class="col-md-5">
+                        <div>
+                            @Html.Action("Partial_Item_ThanhToan", "ShoppingCart")
+                        </div>                      
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div>
+                    Bạn chưa có sản phẩm nào! Vui lòng quay lại trang <a href="/sản-phảm">sản phẩm</a> để mua
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/assets/js/categories_custom.js"></script>
+    <script>
+        function OnFailure(rs) {
+            if (!rs.Success) {
+                $('#show_success').html("Bạn mua hàng thất bại! Xin vui lòng thử lại");
+            }
+        }
+        $(document).ready(function () {
+            $('#myForm').validate({
+                rules: {
+                    'CustomerName': {
+                        required: true
+                    },
+                    'Phone': {
+                        required: true
+                    },
+                    'Address': {
+                        required: true
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    },
+                },
+                messages: {
+                    'CustomerName': 'Bạn không để trống trường này',
+                    'Phone': 'Bạn không để trống trường này',
+                    'Address': 'Bạn không để trống trường này',
+                    'Email': 'Email chưa hợp lệ',
+                }
+            });
+        });
+    </script>
+}
+
